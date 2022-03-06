@@ -20,22 +20,18 @@ X X X X X X X X X X X X (12 rolls: 12 strikes) = 10 frames * 30 points = 300
 export const bowlingTotalScore = rolls => {
   if(rolls === undefined) throw new Error("rolls is required");
   if(!Array.isArray(rolls)) throw new Error("A rolls of type Array is required");
-  const frames = 10;
   let points = 0;
   rolls.forEach(roll => {
     if(roll === "X") {
       points += 10
     } else if(roll.includes("-")) {
       points = Number(roll.replace(/[-]/g, " "))
-    } else if(roll.includes("/")) {
-      points += 10
-      if(roll.length > 2) {
-        points += Number(roll.charAt(2))
-      }
+    } else if(roll.includes("/") && roll.length > 2) {
+      points += 10 + Number(roll.charAt(2))
     }
   })
   if(rolls.length >= 10 && points >= 100) {
     points -= 90
   }
-  return frames * points
+  return 10 * points
 }
